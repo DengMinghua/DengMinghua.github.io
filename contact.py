@@ -9,7 +9,10 @@ def upload():
     contactCol = db.contactCol    
     jsonInfo = request.json
     print(jsonInfo["uuid"])
-    contactCol.insert_one({"uuid":jsonInfo["uuid"], "name":jsonInfo["name"],"phone":jsonInfo["phone"],"avatar":jsonInfo["avatar"]})
+    contactCol.update({'name':jsonInfo["name"]},
+                      {$set:{"uuid":jsonInfo["uuid"], "name":jsonInfo["name"],"phone":jsonInfo["phone"],"avatar":jsonInfo["avatar"]}},
+                      {upsert:true})
+    #contactCol.insert_one({"uuid":jsonInfo["uuid"], "name":jsonInfo["name"],"phone":jsonInfo["phone"],"avatar":jsonInfo["avatar"]})
     return "Successed"
 
 @app.route('/download_contact', methods=['GET'])
@@ -31,4 +34,4 @@ def download():
     return jsonify(resultDic)
     
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", debug=True)
