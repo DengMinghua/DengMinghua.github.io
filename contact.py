@@ -11,7 +11,7 @@ def upload():
     print(jsonInfo["uuid"])
     contactCol.update({'name':jsonInfo["name"]},
                       {"$set":{"uuid":jsonInfo["uuid"], "name":jsonInfo["name"],"phone":jsonInfo["phone"],"avatar":jsonInfo["avatar"]}},
-                      {upsert:True})
+                      upsert:True)
     #contactCol.insert_one({"uuid":jsonInfo["uuid"], "name":jsonInfo["name"],"phone":jsonInfo["phone"],"avatar":jsonInfo["avatar"]})
     return "Successed"
 
